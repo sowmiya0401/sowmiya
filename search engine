@@ -1,0 +1,65 @@
+import java.awt.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.HashMap;
+
+public class SearchEngine extends Frame implements ActionListener {
+    private TextField searchField;
+    private TextArea resultArea;
+    private Button searchButton, resetButton;
+    private HashMap<String, String> information;
+
+    public SearchEngine() {
+        setLayout(new FlowLayout());
+
+        Label searchLabel = new Label("Enter search query:");
+        add(searchLabel);
+
+        searchField = new TextField(20);
+        add(searchField);
+
+        searchButton = new Button("Search");
+        add(searchButton);
+        searchButton.addActionListener(this);
+
+        resetButton = new Button("Reset");
+        add(resetButton);
+        resetButton.addActionListener(this);
+
+        resultArea = new TextArea(10, 30);
+        add(resultArea);
+
+        information = new HashMap<>();
+        addInformation();
+
+        setTitle("Simple Search Engine");
+        setSize(400, 300);
+        setVisible(true);
+    }
+
+    private void addInformation() {
+        information.put("what is java", "Java is a high-level, class-based, object-oriented programming language.");
+        information.put("what is awt", "AWT stands for Abstract Window Toolkit, which is used for creating GUIs in Java.");
+        information.put("search engines", "Search engines are used to find information on the internet.");
+        information.put("object-oriented programming", "Java supports object-oriented programming, a paradigm based on the concept of objects.");
+        information.put("who is prime minister of india","MR narendra modi is prime minister of india");
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == searchButton) {
+            String query = searchField.getText().toLowerCase();
+            if (information.containsKey(query)) {
+                resultArea.setText(information.get(query));
+            } else {
+                resultArea.setText("No information available for the query.");
+            }
+        } else if (e.getSource() == resetButton) {
+            searchField.setText("");
+            resultArea.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        new SearchEngine();
+    }
+}
